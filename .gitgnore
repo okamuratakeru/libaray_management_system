@@ -1,0 +1,17 @@
+.env
+
+# Pythonのコンパイルされたファイル
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ユーザーがアップロードしたファイルが保存されるディレクトリ
+uploads/
+
+# データベースファイル
+instance/library.db
+
+# その他の無視したいファイルやディレクトリ
+.DS_Store
+node_modules/
