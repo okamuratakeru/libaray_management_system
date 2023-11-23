@@ -1,0 +1,31 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<h1>貸出・返却履歴一覧</h1>
+
+<a href="{{ url_for('admin_dashboard' ) }}">管理者ダッシューボードへ</a>
+
+{% for book_history in book_historys%}
+  {% if book_history.book.picture %}     
+  <img src="{{ url_for('static', filename='uploads/' + book_history.book.picture) }}" width="80" height="90">
+  
+  {% else %}
+    <img src="./static/uploads/default.jpg" width="80" height="90">
+  {% endif %}
+
+  <p>タイトル：{{book_history.book.name}}</p>
+  <p>借りた人{{book_history.user.name}}</p>
+  <p>借りた日:{{book_history.borrowed_date}}</p>
+  <p>返した日:{{book_history.returned_date}}</p>
+  <a href="/book_detail/{{book_history.bookid}}">詳細</a>
+
+{% endfor %}

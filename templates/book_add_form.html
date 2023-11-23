@@ -1,0 +1,104 @@
+{% include 'header.html' %}
+<body>
+  <div class="container-fluid" id="main">
+    {% include 'admin_top_menus.html' %}  
+    <div class="row row-offcanvas row-offcanvas-left">
+      {% include 'admin_left_menus.html' %}
+      <div class="col-md-9 col-lg-10 main">
+        <h2>書籍の追加</h2>
+        <form action="{{ url_for('book_add' ) }}" method="post" class="mb-4">
+          <div class="form-row align-items-center">
+            <div class="col-auto">
+              <label for="isbn" class="mr-sm-2">ISBN検索:</label>
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" id="isbn" name="isbn" required>
+            </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-primary" name="isbn_search">検索</button>
+            </div>
+          </div>
+        </form>
+        
+
+        <!-- 書籍追加フォーム -->
+        <form action="{{ url_for('book_add' ) }}" method="post" enctype="multipart/form-data" class="mb-4">
+          <div class="form-group">
+            <label for="picture">画像:</label>
+            <input type="file" class="form-control-file" name="picture">
+            {% if book_isbn %}
+              <img src="{{ book_isbn.image_url }}" alt="Book Image" id="bookImage" class="img-thumbnail mt-2" height="90px" width="70px">
+              <a href="{{ book_isbn.image_url }}" class="btn btn-primary mt-2" id="downloadButton">画像をダウンロード</a>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <label for="name">タイトル:</label>
+            <input type="text" class="form-control" name="name" value="{{ book_isbn.title if book_isbn else '' }}" required>
+          </div>
+
+          <div class="form-group">
+            <label for="author">作者:</label>
+            <input type="text" class="form-control" name="author" value="{{ book_isbn.author if book_isbn else '' }}">
+          </div>
+
+          <div class="form-group">
+            <label for="publisher">出版社:</label>
+            <input type="text" class="form-control" name="publisher" value="{{ book_isbn.publisher if book_isbn else '' }}">
+          </div>
+
+          <div class="form-group">
+            <label for="release_date">出版日:</label>
+            <input type="text" class="form-control" name="release_date" value="{{ book_isbn.release_date if book_isbn else '' }}">
+          </div>
+
+          <div class="form-group">
+            <label for="detail">詳細:</label>
+            <textarea class="form-control" name="detail" required>{{ book_isbn.summary if book_isbn else '' }}</textarea>
+          </div>
+          
+          <button type="submit" class="btn btn-success" name="book_submit">追加</button>
+        </form>
+
+        
+        
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('downloadButton').addEventListener('click', function(e) {
+      e.preventDefault();
+  
+      const image = document.getElementById('bookImage');
+      const imageUrl = image.src;
+  
+      fetch(`/proxy?url=${encodeURIComponent(imageUrl)}`)
+          .then(response => response.blob())
+          .then(blob => {
+              // 画像URLからBlobを作成し、ダウンロードする
+              const downloadUrl = window.URL.createObjectURL(blob);
+              const link = document.createElement('a');
+              link.href = downloadUrl;
+              link.download = 'download.jpg'; // ここでは固定のファイル名を使用
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              window.URL.revokeObjectURL(downloadUrl);
+          })
+          .catch(e => {
+              console.error('画像のダウンロードに失敗しました:', e);
+              alert('画像のダウンロードに失敗しました。');
+          });
+  });
+  
+  
+  </script>
+
+</body>
+</html>
+
+  
+
+
+
+

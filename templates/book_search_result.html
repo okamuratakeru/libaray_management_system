@@ -1,0 +1,91 @@
+
+{% include 'header.html' %}
+
+<body>
+    <div class="container-fluid" id="main">
+        {% include 'admin_top_menus.html' %}
+        <div class="row row-offcanvas row-offcanvas-left">
+            {% include 'admin_left_menus.html' %}	
+            <div class="col-md-9 col-lg-10 main">
+                <h3>検索結果</h3>
+                <p>'{{query}}'に該当する書籍</p>
+                <br>
+                <div class="d-flex justify-content-end">
+                    <!-- 検索フォーム -->
+                    <div class="flex-grow-1 mr-2">
+                        <form action="{{ url_for('search_books') }}" class="form-inline">
+                            <input type="text" name="q" class="form-control w-75 mr-sm-2" placeholder="書籍を検索">
+                            <button type="submit" class="btn btn-default">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- 本を追加するボタン -->
+                    <div>
+                        <a class="btn btn-info" href="{{ url_for('book_add') }}"><span class="glyphicon glyphicon-plus">本を追加する</span></a>
+                    </div>
+                </div>
+                <br>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>書籍</th>
+                            <th>著者</th>
+                            <th>発売日</th>
+                            <th>出版社</th>
+                            <th>アクション</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in books %}
+                            <tr>
+                                <td>
+                                    <!-- {% if book.picture %}
+                                        <img src="../static/uploads/{{book.picture}}" width="80" height="90">
+			                        {% else %}
+						                <img src="../static/images/default.jpg" width="80" height="90">
+					                {% endif %}	 -->
+                                    
+                                        {% if book.picture %}
+                                        <img src="{{ url_for('static', filename='uploads/' + book.picture) }}" alt="Current book picture" class="img-thumbnail" width="80" height="90">
+                                        {% else %}
+                                        <img src="{{ url_for('static', filename='uploads/default.jpg') }}" alt="Current book picture" class="img-thumbnail" width="80" height="90">
+                                        {% endif %}
+                                    			
+                                </td>
+                                <td>{{book.name}}</td>
+                                <td>{{book.author}}</td>
+                                <td>{{book.release_date}}</td>
+                                <td>{{book.publisher}}</td>
+                                <td>
+                                    <a href="{{ url_for('book_detail', bookid=book.bookid) }}" class="btn btn-primary">
+                                        <i class="fas fa-info-circle"></i> 詳細
+                                    </a>
+                                    
+                                    <!-- 編集ボタン -->
+                                    <a href="{{ url_for('book_update', bookid=book.bookid) }}" class="btn btn-warning">
+                                        <i class="fas fa-edit"></i> 編集
+                                    </a>
+                                    
+                                    <!-- 削除ボタン -->
+                                    <a href="{{ url_for('book_delete', bookid=book.bookid) }}" class="btn btn-danger" onclick="return confirm('本当に削除しますか？');">
+                                        <i class="fas fa-trash-alt"></i> 削除
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                {{ pagination.links }}
+                
+                
+            </div>
+        </div>
+    </div>
+</body>
+
+
+

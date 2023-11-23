@@ -1,0 +1,52 @@
+{% include 'header.html' %}
+<body>
+  <div class="container-fluid" id="main">
+    {% include 'admin_top_menus.html' %}  	
+    <div class="row row-offcanvas row-offcanvas-left">   
+      {% include 'admin_left_menus.html' %}	
+      <div class="col-md-9 col-lg-10 main"> 
+        <h3 class="mt-4">管理者リスト</h3>
+        <div class="mb-2 d-flex justify-content-end">
+          
+          <a href="{{ url_for('admin_add')}}" class="btn btn-info">
+            <span class="glyphicon glyphicon-plus"></span> 管理者追加
+          </a>
+          <!-- <button type="button" id="addUser" class="btn btn-info" href="{{ url_for('admin_add')}}">
+              <span class="glyphicon glyphicon-plus"></span> 管理者追加
+          </button> -->
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>名前</th>
+              <th>Email</th>
+              <th>パスワード</th>
+              <th>アクション</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            {% for admin in admins %}
+            <tr>
+              <td>{{ admin.username }}</td>
+              <td>{{ admin.email }}</td>
+              <td>{{ admin.password }}</td> 
+              <td>
+                <a href="{{ url_for('admin_edit', id=admin.id)}}" class="btn btn-primary mr-3">
+                  <i class="fas fa-edit"></i> 編集
+                </a>
+                                
+                <a href="{{ url_for('admin_delete', id=admin.id)}}" class="btn btn-danger" onclick="return confirm('この管理者を削除してよろしいですか？');">
+                  <i class="fas fa-trash"></i> 削除
+                </a>
+              </td>
+              
+            </tr>
+            {% endfor %}	  
+          </tbody>
+        </table>	        
+      </div>       
+    </div>     
+  </div>
+</body>
+</html>

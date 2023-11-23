@@ -1,0 +1,37 @@
+{% include 'header.html' %}
+<body>
+  <div class="container-fluid" id="main">
+    {% include 'admin_top_menus.html' %}  	
+    <div class="row row-offcanvas row-offcanvas-left">   
+      {% include 'admin_left_menus.html' %}	
+      <div class="col-md-9 col-lg-10 main"> 
+        <h3 class="mt-4">ユーザリスト</h3>
+        <table class="table table-striped mt-4">
+          <thead>
+            <tr>
+              <th>名前</th>
+              <th>アクション</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in users %}
+            <tr>
+              <td>{{ user.name }}</td>
+              <td>
+                {% if user.is_locked() and session['user_type'] == 'admin' %}
+                  <a href="{{ url_for('unlock_user', id=user.id) }}" class="btn btn-warning btn-sm">アンロック</a>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>       
+    </div>     
+  </div>
+</body>
+</html>
+
+
+
+

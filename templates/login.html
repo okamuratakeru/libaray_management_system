@@ -1,0 +1,44 @@
+{% include 'header.html' %}
+<body>
+  <div class="container-fluid" id="main">
+  {% include 'admin_top_menus.html' %}  	
+    <div class="row row-offcanvas row-offcanvas-left">      
+      <div class="col-md-9 col-lg-10 main"> 
+		<h2>ユーザログイン</h2>
+		<form action="{{ url_for('login') }}" method="post">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="mt-4">
+            {% for message in messages %}
+              <div class="alert alert-warning" role="alert">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+
+			
+			<div class="form-group">
+				<label for="email">Email:</label>
+				<input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+			</div>
+			<div class="form-group">
+				<label for="password">Password:</label>
+				<input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+			</div>    
+			<button type="submit" class="btn btn-primary">ログイン</button>
+			<p class="bottom">アカウントをお持ちでない場合は、<a class="bottom" href="{{url_for('register')}}"> 新規作成</a></p>
+      <p class="bottom">スタッフの方は、<a class="bottom" href="{{url_for('admin_login')}}"> こちら</a></p>
+		</form>
+        
+        <hr>         
+       </div>       
+      </div>     
+    </div>
+  </body>
+</html>
+
+
+

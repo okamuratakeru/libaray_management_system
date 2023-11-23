@@ -1,0 +1,37 @@
+{% include 'header.html' %}
+<body>
+  <div class="container-fluid" id="main">
+    {% include 'admin_top_menus.html' %}  
+    <div class="row row-offcanvas row-offcanvas-left">
+      {% include 'admin_left_menus.html' %}
+      <div class="col-md-9 col-lg-10 main">
+        
+        <h2 class="my-4">本の詳細</h2>
+
+        <div class="card mb-5">
+          <div class="card-body">
+            <h3 class="card-title">{{ book.name }}</h3>
+            <h4 class="card-subtitle mb-2 text-muted">{{ book.author }}</h4>
+            <p class="card-text">発売日: {{ book.release_date }}</p>
+            <p class="card-text">出版社: {{ publisher }}</p>
+            <p class="card-text">{{ book.detail }}</p>
+          </div>
+        </div>
+
+        <a href="#" class="btn btn-primary" onclick="history.back();return false;">戻る</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+  
+  
+

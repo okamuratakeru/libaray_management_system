@@ -1,0 +1,73 @@
+{% include 'header.html' %}
+<body>
+  <div class="container-fluid" id="main">
+	{% include 'admin_top_menus.html' %}  	
+    <div class="row row-offcanvas row-offcanvas-left">   
+	  {% include 'admin_left_menus.html' %}	
+      <div class="col-md-9 col-lg-10 main"> 
+		<h3>編集書籍</h3>
+		<br>
+        
+            <form method="post" id="bookForm" action="/book_update/{{book.bookid}}" enctype="multipart/form-data">
+                <div class="">                
+                    <div class="">
+                      <div class="form-group">
+                        <label for="picture">画像:</label>
+                        <input type="file" class="form-control-file" name="picture">
+                        <div class="mt-2">
+                            {% if book.picture %}
+                            <img src="{{ url_for('static', filename='uploads/' + book.picture) }}" alt="Current book picture" class="img-thumbnail" width="100">
+                            {% else %}
+                            <img src="{{ url_for('static', filename='uploads/default.jpg') }}" alt="Current book picture" class="img-thumbnail" width="100">
+                            {% endif %}
+                        </div>
+                      </div>
+
+                        <div class="form-group">							
+                            <label for="name" class="control-label">タイトル：</label>							
+                            <input type="text" name="name" id="name" autocomplete="off" class="form-control" placeholder="本のタイトル" value="{{book.name}}"/>                                       
+                        </div>                    
+                        <div class="form-group">							
+                            <label for="author" class="control-label">作者:</label>							
+                            <input type="text" name="author" id="author" value="{{book.author}}" autocomplete="off" class="form-control" placeholder="本の作者" >                                        
+                        </div>                    
+                        <div class="form-group">							
+                            <label for="publisher" class="control-label">出版社:</label>			
+                            <input type="text" name="publisher" id="publisher" autocomplete="off" class="form-control" placeholder="" value="{{book.publisher}}"/>
+                        </div>
+                        
+                        <div class="form-group">							
+                            <label for="release_date" class="control-label">出版日:</label>
+                            <input type="text" name="release_date" autocomplete="off" class="form-control" value="{{book.release_date }}">
+                        </div>
+
+                        <div class="form-group">
+                          <label for="detail">詳細:</label>
+                          <textarea class="form-control" name="detail" rows="4" >{{book.detail}}</textarea>
+                        </div>
+                        
+                        
+                        
+                        
+                    <div class="">
+                        <input type="submit" name="save" id="save" class="btn btn-info" value="編集" />                    
+                    </div>
+                </div>
+          
+        
+      </div>
+    </form>
+    
+			      
+      <hr>  
+      <a href="#" class="btn btn-primary" onclick="history.back();return false;">戻る</a>
+       
+       </div>       
+      </div>     
+    </div>
+
+	
+	
+  </body>
+</html>
+

@@ -1,0 +1,25 @@
+<h1>返却画面</h1>
+
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+{% endwith %}
+
+{% for book_return in books_return %} 
+
+{% if book_return.picture %}     
+<img src="./static/uploads/{{book_return.picture}}" width="80" height="90">
+{% else %}
+<img src="./static/uploads/default.jpg" width="80" height="90">
+{% endif %}
+<p>{{book_return.name}}</p>
+<p>{{book_return.isbn}}</p>
+<a href="{{ url_for('book_return',id=book_return.bookid)}}">返却</a>
+{% endfor %}
+
+<a href="{{ url_for('user_dashboard' ) }}">ユーザーダッシューボード</a>
